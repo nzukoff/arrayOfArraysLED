@@ -10,7 +10,6 @@
 #define BRIGHTNESS 150
 CRGB leds[NUM_STRIPS][NUM_LEDS_PER_STRIP];
 
-
 // These constants won't change.  They're used to give names
 // to the pins used:
 const int analogInPinX = A0;  
@@ -42,16 +41,16 @@ void setup() {
 
 void loop() {
 
-  // This outer loop will go over each strip, one at a time
-  for(int x = 0; x < NUM_STRIPS; x++) {
-    // This inner loop will go over each led in the current strip, one at a time
-    for(int i = 0; i < NUM_LEDS_PER_STRIP; i++) {
-      leds[x][i] = CRGB::Red;
-      FastLED.show();
-      leds[x][i] = CRGB::Black;
-      delay(100);
-    }
-  }
+//  // This outer loop will go over each strip, one at a time
+//  for(int x = 0; x < NUM_STRIPS; x++) {
+//    // This inner loop will go over each led in the current strip, one at a time
+//    for(int i = 0; i < NUM_LEDS_PER_STRIP; i++) {
+//      leds[x][i] = CRGB::Red;
+//      FastLED.show();
+//      leds[x][i] = CRGB::Black;
+//      delay(100);
+//    }
+//  }
 
    // read the input values
   JoystickValueX = analogRead(analogInPinX);
@@ -71,61 +70,60 @@ void loop() {
 //  // after the last reading:
 //  delay(5);
 
-//  if (started == false) {
-//    leds1[0] = CRGB::Red;
-//    leds2[0] = CRGB::Blue;
-//    FastLED.show();  
-//  }
-//  
-//  if (JoystickValueX > 900) {    
-//    started = true;
-//    leds1[previousPositionX] = CRGB::Black;
-//    currentPositionX++;
-//    if (currentPositionX > NUM_LEDS_PER_STRIP-1) {
-//        currentPositionX = 0;
-//    }    
-//    previousPositionX = currentPositionX;
-//    leds1[currentPositionX] = CRGB::Red;
-//    FastLED.show();
-//    delay(100);
-//  }
-//  
-//  if (JoystickValueX < 100) {    
-//    started = true;
-//    leds1[previousPositionX] = CRGB::Black;
-//    currentPositionX--;
-//    if (currentPositionX < 0) {
-//        currentPositionX = NUM_LEDS_PER_STRIP-1;
-//    }    
-//    previousPositionX = currentPositionX;
-//    leds1[currentPositionX] = CRGB::Red;
-//    FastLED.show();
-//    delay(100);
-//  }
-//
-//    if (JoystickValueY > 900) {    
-//    started = true;
-//    leds2[previousPositionY] = CRGB::Black;
-//    currentPositionY++;
-//    if (currentPositionY > NUM_LEDS_PER_STRIP-1) {
-//        currentPositionY = 0;
-//    }    
-//    previousPositionY = currentPositionY;
-//    leds2[currentPositionY] = CRGB::Blue;
-//    FastLED.show();
-//    delay(100);
-//  }
-//  
-//  if (JoystickValueY < 100) {    
-//    started = true;
-//    leds2[previousPositionY] = CRGB::Black;
-//    currentPositionY--;
-//    if (currentPositionY < 0) {
-//        currentPositionY = NUM_LEDS_PER_STRIP-1;
-//    }    
-//    previousPositionY = currentPositionY;
-//    leds2[currentPositionY] = CRGB::Blue;
-//    FastLED.show();
-//    delay(100);
-//  }
+  if (started == false) {
+    leds[0][0] = CRGB::Red;
+    FastLED.show();  
+  }
+  
+  if (JoystickValueX > 900) {    
+    started = true;
+    leds[previousPositionX][previousPositionY] = CRGB::Black;
+    currentPositionX++;
+    if (currentPositionX > NUM_STRIPS-1) {
+        currentPositionX = 0;
+    }    
+    previousPositionX = currentPositionX;
+    leds[currentPositionX][currentPositionY] = CRGB::Red;
+    FastLED.show();
+    delay(100);
+  }
+  
+  if (JoystickValueX < 100) {    
+    started = true;
+    leds[previousPositionX][previousPositionY] = CRGB::Black;
+    currentPositionX--;
+    if (currentPositionX < 0) {
+        currentPositionX = NUM_STRIPS-1;
+    }    
+    previousPositionX = currentPositionX;
+    leds[currentPositionX][currentPositionY] = CRGB::Red;
+    FastLED.show();
+    delay(100);
+  }
+
+    if (JoystickValueY > 900) {    
+    started = true;
+    leds[previousPositionX][previousPositionY] = CRGB::Black;
+    currentPositionY++;
+    if (currentPositionY > NUM_LEDS_PER_STRIP-1) {
+        currentPositionY = 0;
+    }    
+    previousPositionY = currentPositionY;
+    leds[previousPositionX][currentPositionY] = CRGB::Red;
+    FastLED.show();
+    delay(100);
+  }
+  
+  if (JoystickValueY < 100) {    
+    started = true;
+    leds[previousPositionX][previousPositionY] = CRGB::Black;
+    currentPositionY--;
+    if (currentPositionY < 0) {
+        currentPositionY = NUM_LEDS_PER_STRIP-1;
+    }    
+    previousPositionY = currentPositionY;
+    leds[previousPositionX][currentPositionY] = CRGB::Red;
+    FastLED.show();
+    delay(100);
+  }
 }
